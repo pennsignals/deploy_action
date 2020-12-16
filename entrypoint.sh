@@ -1,8 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
 # echo all the variabls
 echo "INPUT_ADDR: $INPUT_VERSION"
 echo "INPUT_CONFIG: $INPUT_CONFIG"
+echo "INPUT_NOMAD_ADDR: $INPUT_NOMAD_ADDR"
+
+# export NOMAD_ADDR for deployment
+export "NOMAD_ADDR=$INPUT_NOMAD_ADDR"
 
 # use levant to deploy service nomad jobs as templates
 for dir in */ ; do

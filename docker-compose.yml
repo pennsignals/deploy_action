@@ -6,7 +6,8 @@ services:
     build: .
     environment:
     - INPUT_CONFIG=deploy_config.yml
-    - INPUT_VERSIOB=1.0.0
+    - INPUT_VERSION=1.0.0
+    - INPUT_NOMAD_ADDR=http://10.146.0.5:4646/
     volumes:
     - ./:/source
     working_dir: /source

@@ -12,10 +12,14 @@ inputs:
   config:
     description: "deploy_config.yml file with all deployment settings"
     required: true
+  nomad_addr:
+    description: "target nomad deployment address"
+    required: true
 
 runs:
   using: "docker"
   image: "Dockerfile"
   args:
+    - ${{ inputs.nomad_addr }}
     - ${{ inputs.version }}
     - ${{ inputs.config }}
