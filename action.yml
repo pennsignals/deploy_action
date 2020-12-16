@@ -1,0 +1,21 @@
+# action.yml
+name: "Levant Deploy"
+author: "Darryl Mendillo"
+description: "Template and deploy all nomad jobs matching regex in config"
+branding:
+  icon: "database"
+  color: "red"
+inputs:
+  version:
+    description: "Release version (tag)"
+    required: true
+  config:
+    description: "deploy_config.yml file with all deployment settings"
+    required: true
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.version }}
+    - ${{ inputs.config }}

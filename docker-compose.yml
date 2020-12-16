@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+
+  deploy:
+    build: .
+    environment:
+    - INPUT_CONFIG=deploy_config.yml
+    - INPUT_VERSIOB=1.0.0
+    volumes:
+    - ./:/source
+    working_dir: /source
