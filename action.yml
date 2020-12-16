@@ -15,6 +15,10 @@ inputs:
   nomad_addr:
     description: "target nomad deployment address"
     required: true
+  deploy:
+    description: "deploy the jobs after rendering. False will only render. Default = TRUE"
+    required: false
+    default: 'TRUE'
 
 runs:
   using: "docker"
@@ -23,3 +27,4 @@ runs:
     - ${{ inputs.nomad_addr }}
     - ${{ inputs.version }}
     - ${{ inputs.config }}
+    - ${{ inputs.deploy }}
