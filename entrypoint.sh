@@ -1,15 +1,12 @@
 #!/bin/bash
 
-INPUT_DEPLOY=${INPUT_DEPLOY:-TRUE}
+DEPLOY=${DEPLOY:-TRUE}
 
 # echo all the variabls
-echo "INPUT_ADDR: $INPUT_VERSION"
-echo "INPUT_CONFIG: $INPUT_CONFIG"
-echo "INPUT_NOMAD_ADDR: $INPUT_NOMAD_ADDR"
-echo "INPUT_DEPLOY: $INPUT_DEPLOY"
-
-# export NOMAD_ADDR for deployment
-export "NOMAD_ADDR=$INPUT_NOMAD_ADDR"
+echo "VERSION: $VERSION"
+echo "DEPLOY_CONFIG: $DEPLOY_CONFIG"
+echo "NOMAD_ADDR: $NOMAD_ADDR"
+echo "DEPLOY: $DEPLOY"
 
 # render
 for dir in */ ; do
@@ -21,8 +18,8 @@ for dir in */ ; do
 
         # only deploy *.nomad.hcl (jobs)
         if [ $matched = "true" ]; then
-        echo "levant render -var TAG=${INPUT_VERSION} -var DEPLOY=staging -var-file=${INPUT_CONFIG} -out=nomad/$(basename $file) ${file}"
-        levant render -var TAG=${INPUT_VERSION} -var DEPLOY=staging -var-file=${INPUT_CONFIG} -out=nomad/$(basename $file) ${file}
+        echo "levant render -var TAG=${VERSION} -var DEPLOY=staging -var-file=${DEPLOY_CONFIG} -out=nomad/$(basename $file) ${file}"
+        levant render -var TAG=${VERSION} -var DEPLOY=staging -var-file=${DEPLOY_CONFIG} -out=nomad/$(basename $file) ${file}
         fi
 
     done
@@ -30,7 +27,7 @@ for dir in */ ; do
 done
 
 # deploy
-if [ $INPUT_DEPLOY = "TRUE" ]; then
+if [ $DEPLOY = "TRUE" ]; then
     for dir in */ ; do
         if [ -d "${dir}nomad" ]; then
 
@@ -40,8 +37,8 @@ if [ $INPUT_DEPLOY = "TRUE" ]; then
 
             # only deploy *.nomad.hcl (jobs)
             if [ $matched = "true" ]; then
-            echo "levant deploy -var TAG=${INPUT_VERSION} -ignore-no-changes -var DEPLOY=staging -var-file=${INPUT_CONFIG} ${file}"
-            levant deploy -var TAG=${INPUT_VERSION} -ignore-no-changes -var DEPLOY=staging -var-file=${INPUT_CONFIG} ${file}
+            echo "levant deploy -var TAG=${VERSION} -ignore-no-changes -var DEPLOY=staging -var-file=${DEPLOY_CONFIG} ${file}"
+            levant deploy -var TAG=${VERSION} -ignore-no-changes -var DEPLOY=staging -var-file=${DEPLOY_CONFIG} ${file}
             fi
 
         done

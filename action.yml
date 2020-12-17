@@ -23,8 +23,8 @@ inputs:
 runs:
   using: "docker"
   image: "Dockerfile"
-  args:
-    - ${{ inputs.nomad_addr }}
-    - ${{ inputs.version }}
-    - ${{ inputs.config }}
-    - ${{ inputs.deploy }}
+  env:
+    NOMAD_ADDR: ${{ inputs.nomad_addr }}
+    VERSION: ${{ inputs.version }}
+    DEPLOY_CONFIG: ${{ inputs.config }}
+    DEPLOY: ${{ inputs.deploy }}
